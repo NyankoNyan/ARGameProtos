@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e84fd721ce332a4eb98ad7a17daf2cc, type: 3}
+  m_Name: AppSettingsInstaller
+  m_EditorClassIdentifier: 
+  StartupSettings:
+    NextScene:
+      Scene: {fileID: 102900000, guid: a69e4410f788e07449593e6f9fa3c44f, type: 3}
+      SceneName: MainMenu
+      sceneIndex: 1
+      sceneEnabled: 1
+  GameModeSettings:
+    GameModes:
+    - Name: Top-down shooter
+      SceneDefault: TopDownShooter
+      SceneAR: TopDownShooter
+    - Name: Top-down shooter (test)
+      SceneDefault: TopDownShooter
+      SceneAR: TopDownShooter

@@ -1,0 +1,239 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e787e4d7a0a6e4b8a22d05d08a067d, type: 3}
+  m_Name: TDSSettingsInstaller
+  m_EditorClassIdentifier: 
+  SceneARSettings:
+    ARSession: {fileID: 3076411680165999230, guid: 1b8a462eb041bcb4183c677663e06f3f,
+      type: 3}
+    ARSessionOrigin: {fileID: 156707700703306744, guid: 3e8245ca49490ed4bb53a48613b821e3,
+      type: 3}
+  ScenePCSettings:
+    Room: {fileID: 7081475676522228871, guid: fb35e8318d78f4044968f49785def89b, type: 3}
+    FloorTag: Floor
+  PlayerSettings:
+    MaxSpeed: 0.8
+    Acceleration: 10
+    MovePositionIgnoreDistance: 0.03
+    RotationSmooth: 0.5
+    FireDelay: 0.1
+  PlayerControllerSettings:
+    MoveType: 1
+    CharacterMoveInput:
+      m_Name: Character Move Input
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 2b8a6b23-49f2-4724-86e8-1cdc91589dc5
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 2D Vector
+        m_Id: 5fd2fb46-6553-4a43-b59e-d71df9b98bd1
+        m_Path: 2DVector
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Character Move Input
+        m_Flags: 4
+      - m_Name: up
+        m_Id: 8e3024cd-7988-431a-b489-0a188a70432e
+        m_Path: <Keyboard>/w
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Character Move Input
+        m_Flags: 8
+      - m_Name: down
+        m_Id: fc79fda5-18f7-4c67-acc6-cdcf3f0017d5
+        m_Path: <Keyboard>/s
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Character Move Input
+        m_Flags: 8
+      - m_Name: left
+        m_Id: 1822b7ba-cf0c-47a3-88ba-d9c5efe9bf2c
+        m_Path: <Keyboard>/a
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Character Move Input
+        m_Flags: 8
+      - m_Name: right
+        m_Id: 809aa5b1-b0dc-4849-b333-8a9249b05ade
+        m_Path: <Keyboard>/d
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Character Move Input
+        m_Flags: 8
+      - m_Name: 
+        m_Id: b1346376-2959-431a-bba0-5593fa32ef11
+        m_Path: <Gamepad>/leftStick
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Character Move Input
+        m_Flags: 0
+      m_Flags: 0
+    CameraMoveInput:
+      m_Name: Camera Move Input
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: f774a82f-8c66-4dc3-929a-8e99b52454cf
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 3D Vector
+        m_Id: b3325a0f-8fda-4c23-90be-3fe477917441
+        m_Path: 3DVector
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Camera Move Input
+        m_Flags: 4
+      - m_Name: up
+        m_Id: 3383844b-7b77-4033-964a-5d3eef7150ed
+        m_Path: <Keyboard>/e
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Camera Move Input
+        m_Flags: 8
+      - m_Name: down
+        m_Id: 98b23945-eb77-40dc-93ec-23185b3c099a
+        m_Path: <Keyboard>/q
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Camera Move Input
+        m_Flags: 8
+      - m_Name: left
+        m_Id: 83afbd91-f2eb-43b5-9721-0a84a3206eb6
+        m_Path: <Keyboard>/a
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Camera Move Input
+        m_Flags: 8
+      - m_Name: right
+        m_Id: 0c2cd4b8-65ec-4122-9ba6-d4894fe51f20
+        m_Path: <Keyboard>/d
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Camera Move Input
+        m_Flags: 8
+      - m_Name: forward
+        m_Id: f132b6f9-bc3f-484e-a3fe-3fdbae2d50d0
+        m_Path: <Keyboard>/w
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Camera Move Input
+        m_Flags: 8
+      - m_Name: backward
+        m_Id: 85911798-eb09-4364-be2a-13471db9814a
+        m_Path: <Keyboard>/s
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Camera Move Input
+        m_Flags: 8
+      m_Flags: 0
+    MoveSpeed: 2
+    CameraRotateInput:
+      m_Name: Camera Rotate Input
+      m_Type: 0
+      m_ExpectedControlType: Vector2
+      m_Id: 979c1de5-2b83-4fd6-be50-83e87a217993
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 49f0aeb8-4bb6-4882-b8a9-41a88394a9f2
+        m_Path: <Mouse>/delta
+        m_Interactions: 
+        m_Processors: InvertVector2(invertX=false)
+        m_Groups: 
+        m_Action: Camera Rotate Input
+        m_Flags: 0
+      m_Flags: 0
+    RotationSensibility: 20
+    FireInput:
+      m_Name: Fire Input
+      m_Type: 0
+      m_ExpectedControlType: Vector2
+      m_Id: 114bdcb1-df5b-4067-b8a7-47701138050c
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 2D Vector
+        m_Id: 723cd5f9-3191-4b16-8192-11644836f3b2
+        m_Path: 2DVector
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Fire Input
+        m_Flags: 4
+      - m_Name: up
+        m_Id: 7f1c97d5-2562-4ea9-977f-1c171d70b556
+        m_Path: <Keyboard>/upArrow
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Fire Input
+        m_Flags: 8
+      - m_Name: down
+        m_Id: 812235bb-c9a7-4187-8aa3-d8e076117e51
+        m_Path: <Keyboard>/downArrow
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Fire Input
+        m_Flags: 8
+      - m_Name: left
+        m_Id: e177b292-3fef-4062-993b-320821353815
+        m_Path: <Keyboard>/leftArrow
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Fire Input
+        m_Flags: 8
+      - m_Name: right
+        m_Id: 16243653-863e-4b9f-8878-2c5af252b458
+        m_Path: <Keyboard>/rightArrow
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Fire Input
+        m_Flags: 8
+      - m_Name: 
+        m_Id: 2f7a3a50-073e-405d-9a37-e11bde5bc048
+        m_Path: <Gamepad>/rightStick
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Fire Input
+        m_Flags: 0
+      m_Flags: 0
+    FireSensitivity: 0.5
+  CursorSettings:
+    CursorPrefab: {fileID: 5742589004015360069, guid: 627dabb048057634daa6c1caffad0a82,
+      type: 3}
+  BulletSettings:
+    SpawnEffect: {fileID: 0}
+    HitEffect: {fileID: 0}
+    Lifetime: 5
+    Speed: 2
+  UISettings:
+    HideSticksOnPC: 1
