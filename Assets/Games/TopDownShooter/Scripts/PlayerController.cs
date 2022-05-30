@@ -15,25 +15,26 @@ namespace Games.TDS
         private readonly LevelSpawners _spawners;
         private readonly Player.Factory _playerFactory;
         private readonly TargetingContoller _targetingController;
-        private Player _player;
+        private readonly PlayerRegistry _playerRegistry;
 
         public MoveTypes MoveType => _settings.MoveType;
         public CastPoint CastPoint { get => _castPoint; }
         public Vector2 MoveDirection { get => _moveDirection; }
-        public Player Player { get => _player; set => _player = value; }
 
         public PlayerController(
             DiContainer container,
             Settings settings,
             LevelSpawners spawners,
             Player.Factory playerFactory,
-            TargetingContoller targetingContoller)
+            TargetingContoller targetingContoller,
+            PlayerRegistry playerRegistry)
         {
             _container = container;
             _settings = settings;
             _spawners = spawners;
             _playerFactory = playerFactory;
             _targetingController = targetingContoller;
+            _playerRegistry = playerRegistry;
 
             _settings.CharacterMoveInput.Enable();
             _settings.FireInput.Enable();
@@ -41,7 +42,7 @@ namespace Games.TDS
 
         public void Tick()
         {
-            if (!_player) {
+            if (!_playerRegistry.Player) {
                 return;
             }
 
@@ -53,15 +54,15 @@ namespace Games.TDS
                 if (fireDirection != Vector2.zero) {
                     Vector3 fireNormalized = Normalize2DInputFromView( sceneSetup.Camera, fireDirection );
                     if (fireDirection.magnitude >= _settings.FireSensitivity) {
-                        _player.FireTo( fireNormalized );
+                        _playerRegistry.Player.FireTo( fireNormalized );
                     } else {
-                        _player.WatchTo( fireNormalized );
+                        _playerRegistry.Player.WatchTo( fireNormalized );
                     }
                 }
             }
 
 
-            _player.Tick();
+            _playerRegistry.Player.Tick();
         }
 
         private void MovePlayer()
@@ -78,7 +79,7 @@ namespace Games.TDS
                     _moveDirection = Normalize2DInputFromView( sceneSetup.Camera, inputDirection );
 
                     if (_moveDirection != Vector3.zero) {
-                        _player.MoveDirection( _moveDirection );
+                        _playerRegistry.Player.MoveDirection( _moveDirection );
                     }
 
                 } else if (_settings.MoveType == MoveTypes.Target) {
@@ -86,7 +87,7 @@ namespace Games.TDS
                     _castPoint = _targetingController.CastScreenRay( new Vector2( .5f, .5f ), true );
 
                     if (_castPoint != null) {
-                        _player.MovePosition( _castPoint.Position );
+                        _playerRegistry.Player.MovePosition( _castPoint.Position );
                     }
 
                 }
@@ -95,8 +96,8 @@ namespace Games.TDS
 
         private Vector3 Normalize2DInputFromView(Camera camera, Vector2 inputDirection)
         {
-            Vector3 cameraViewOnFloor = Vector3.ProjectOnPlane( camera.transform.forward, _player.Up );
-            Quaternion extRotation = Quaternion.LookRotation( cameraViewOnFloor.normalized, _player.Up );
+            Vector3 cameraViewOnFloor = Vector3.ProjectOnPlane( camera.transform.forward, _playerRegistry.Player.Up );
+            Quaternion extRotation = Quaternion.LookRotation( cameraViewOnFloor.normalized, _playerRegistry.Player.Up );
 
             return extRotation * new Vector3( inputDirection.x, 0, inputDirection.y );
         }

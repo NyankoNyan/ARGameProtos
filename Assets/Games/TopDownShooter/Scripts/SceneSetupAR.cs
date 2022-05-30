@@ -11,6 +11,7 @@ using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 
 namespace Games.TDS
 {
+
     public class SceneSetupAR : SceneSetup, IDisposable
     {
 
@@ -20,10 +21,12 @@ namespace Games.TDS
         private ARPlaneManager _planeManager;
         private Camera _camera;
         private readonly GameController _gameController;
+        private readonly ARRefs _arRefs;
 
-        public SceneSetupAR(GameController gameController)
+        public SceneSetupAR(GameController gameController,ARRefs arRefs)
         {
             _gameController = gameController;
+            _arRefs = arRefs;
         }
 
         public override void Start()
@@ -31,6 +34,7 @@ namespace Games.TDS
             GameObject.Instantiate( _settings.ARSession );
             _sessionOrigin = GameObject.Instantiate( _settings.ARSessionOrigin );
             _camera = Camera.main;
+            _arRefs.Origin = _sessionOrigin.GetComponent<ARSessionOrigin>();
             _raycastManager = _sessionOrigin.GetComponent<ARRaycastManager>();
             _planeManager = _sessionOrigin.GetComponent<ARPlaneManager>();
             _gameController.StateChangedEvent += OnStateChanged;

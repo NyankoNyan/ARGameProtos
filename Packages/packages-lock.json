@@ -306,7 +306,7 @@
     },
     "com.unity.xr.interactionsubsystems": {
       "version": "1.0.1",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.subsystemregistration": "1.0.5"
@@ -325,7 +325,7 @@
     },
     "com.unity.xr.magicleap": {
       "version": "6.4.1",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.modules.screencapture": "1.0.0",

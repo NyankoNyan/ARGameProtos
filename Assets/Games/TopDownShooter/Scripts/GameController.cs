@@ -25,10 +25,10 @@ namespace Games.TDS
         readonly ARFeatures _arFeatures;
         readonly SceneSetupFactory _sceneSetupFactory;
         private readonly Anchor.Factory _anchorFactory;
-        private readonly PlayerController _playerController;
         private readonly Player.Factory _playerFactory;
         private readonly LevelSpawners _spawners;
         private readonly TargetingContoller _targetingContoller;
+        private readonly ARRefs _arRefs;
         GameState _currentGameState;
         private SceneSetup _sceneSetup;
 
@@ -46,20 +46,20 @@ namespace Games.TDS
             ARFeatures arFeatures,
             SceneSetupFactory sceneSetupFactory,
             Anchor.Factory anchorFactory,
-            PlayerController playerController,
             Player.Factory playerFactory,
             LevelSpawners spawners,
-            TargetingContoller targetingContoller)
+            TargetingContoller targetingContoller,
+            ARRefs arRefs)
         {
             _container = container;
             _gameStateFactory = gameStateFactory;
             _arFeatures = arFeatures;
             _sceneSetupFactory = sceneSetupFactory;
             _anchorFactory = anchorFactory;
-            _playerController = playerController;
             _playerFactory = playerFactory;
             _spawners = spawners;
             _targetingContoller = targetingContoller;
+            _arRefs = arRefs;
         }
 
         public void Tick()
@@ -107,6 +107,8 @@ namespace Games.TDS
             if (point != null) {
                 if (_arFeatures.IsARSupported) {
                     _anchor = _anchorFactory.Create( point );
+                    _arRefs.Origin.MakeContentAppearAt( _anchor.transform, _anchor.transform.position, _anchor.transform.rotation );
+                    _arRefs.Origin.transform.localScale = 2 * Vector3.one;
                     _anchorPlane = new Plane( point.Rotation * Vector3.up, point.Position );
                     _targetingContoller.SetPlane( _anchorPlane );
                 }
@@ -128,8 +130,6 @@ namespace Games.TDS
                 _player.transform.position = _spawners.transform.position;
                 _player.transform.rotation = _spawners.transform.rotation;
             }
-
-            _playerController.Player = _player;
 
             ChangeState( GameStates.Play );
         }
@@ -214,7 +214,20 @@ namespace Games.TDS
 
     public class GameStatePlay : GameState
     {
+        private readonly TargetingCursor _targetingCursor;
+
+        public GameStatePlay(TargetingCursor targetingCursor)
+        {
+            _targetingCursor = targetingCursor;
+        }
+
         public override GameStates State => GameStates.Play;
+
+
+        public override void Start()
+        {
+            _targetingCursor.Active = true;
+        }
         public class Factory : PlaceholderFactory<GameStatePlay> { }
     }
 

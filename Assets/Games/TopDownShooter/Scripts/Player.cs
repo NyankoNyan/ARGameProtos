@@ -6,13 +6,14 @@ using Zenject;
 namespace Games.TDS
 {
     [RequireComponent( typeof( Rigidbody ) )]
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IHitable
     {
         [SerializeField, MustBeAssigned] Transform BulletFirePoint;
 
         Settings _settings;
         private BulletSpawnService _bulletSpawnService;
         private Rigidbody _rigidBody;
+        private PlayerRegistry _playerRegistry;
         Vector3 _speed;
 
         bool _onMove;
@@ -26,13 +27,22 @@ namespace Games.TDS
         [Inject]
         public void Construct(
             Settings settings,
-            BulletSpawnService bulletSpawnService
+            BulletSpawnService bulletSpawnService,
+            PlayerRegistry playerRegistry
             )
         {
             _settings = settings;
             _bulletSpawnService = bulletSpawnService;
 
             _rigidBody = GetComponent<Rigidbody>();
+
+            _playerRegistry = playerRegistry;
+            _playerRegistry.Player = this;
+        }
+
+        public void OnDestroy()
+        {
+            _playerRegistry.Player = null;
         }
 
         public void Tick()
@@ -118,6 +128,10 @@ namespace Games.TDS
             _onFire = true;
         }
 
+        public bool Alive => true;
+        public Vector3 Position => transform.position;
+
+
         private void BreakSpeed()
         {
             float accDelta = _settings.Acceleration * Time.deltaTime;
@@ -126,6 +140,16 @@ namespace Games.TDS
             } else {
                 _speed = _speed.normalized * ( _speed.magnitude - accDelta );
             }
+        }
+
+        public void GetDamage(float damage)
+        {
+
+        }
+
+        public void GetImpact(Vector3 impactForce)
+        {
+            transform.position += Vector3.ProjectOnPlane( impactForce, transform.up );
         }
 
         public class Factory : PlaceholderFactory<Player> { }

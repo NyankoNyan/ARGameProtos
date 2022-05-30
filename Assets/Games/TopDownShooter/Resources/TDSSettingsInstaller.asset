@@ -21,9 +21,9 @@ MonoBehaviour:
     Room: {fileID: 7081475676522228871, guid: fb35e8318d78f4044968f49785def89b, type: 3}
     FloorTag: Floor
   PlayerSettings:
-    MaxSpeed: 0.8
+    MaxSpeed: 5
     Acceleration: 10
-    MovePositionIgnoreDistance: 0.03
+    MovePositionIgnoreDistance: 0.3
     RotationSmooth: 0.5
     FireDelay: 0.1
   PlayerControllerSettings:
@@ -150,7 +150,7 @@ MonoBehaviour:
         m_Action: Camera Move Input
         m_Flags: 8
       m_Flags: 0
-    MoveSpeed: 2
+    MoveSpeed: 5
     CameraRotateInput:
       m_Name: Camera Rotate Input
       m_Type: 0
@@ -234,6 +234,16 @@ MonoBehaviour:
     SpawnEffect: {fileID: 0}
     HitEffect: {fileID: 0}
     Lifetime: 5
-    Speed: 2
+    Speed: 20
+    Damage: 100
   UISettings:
     HideSticksOnPC: 1
+  HitSettings:
+    DamageToHitForceMult: 0.1
+  EnemySpawnSettings:
+    TimeBeforeFirstSpawn: 3
+    TimeBetweenSpawns: 2
+    SpawnDistance: 10
+  EnemySettings:
+    speed: 3
+    damage: 20

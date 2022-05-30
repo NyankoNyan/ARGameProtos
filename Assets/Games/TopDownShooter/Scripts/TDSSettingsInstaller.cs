@@ -13,6 +13,10 @@ namespace Games.TDS
         public TargetingCursor.Settings CursorSettings;
         public Bullet.Settings BulletSettings;
         public UISetup.Settings UISettings;
+        public HitService.Settings HitSettings;
+        public EnemySpawner.Settings EnemySpawnSettings;
+        public Enemy.Settings EnemySettings;
+
         public override void InstallBindings()
         {
             Container.BindInstance( SceneARSettings );
@@ -22,6 +26,9 @@ namespace Games.TDS
             Container.BindInstance( CursorSettings );
             Container.BindInstance( BulletSettings );
             Container.BindInstance( UISettings );
+            Container.BindInstance( HitSettings );
+            Container.BindInstance( EnemySpawnSettings );
+            Container.BindInstance( EnemySettings );
         }
     }
 }

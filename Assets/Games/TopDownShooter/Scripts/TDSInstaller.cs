@@ -56,6 +56,21 @@ namespace Games.TDS
                 .AsSingle()
                 .NonLazy();
 
+            Container
+                .BindFactory<Enemy, Enemy.Factory>()
+                .FromPoolableMemoryPool<Enemy, Enemy.Pool>( poolBuilder => poolBuilder
+                     .WithInitialSize( 10 )
+                     .FromSubContainerResolve()
+                     .ByNewPrefabInstaller<EnemyInstaller>( _settings.EnemyPrefab )
+                     .WithGameObjectName( "Enemy" )
+                     .UnderTransformGroup( "Enemies" )
+                );
+
+            Container.Bind<HitService>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<EnemySpawner>().AsSingle().NonLazy();
+
+            Container.Bind<ARRefs>().AsSingle();
         }
 
         private void InstallPlayer()
@@ -66,6 +81,8 @@ namespace Games.TDS
                 .WithGameObjectName( "Player" );
 
             Container.BindInterfacesAndSelfTo<PlayerController>().AsSingle();
+
+            Container.Bind<PlayerRegistry>().AsSingle();
         }
 
         private void InstallScene()
@@ -93,6 +110,7 @@ namespace Games.TDS
             [MustBeAssigned] public LevelSpawners Spawners;
             [MustBeAssigned] public Player PlayerPrefab;
             [MustBeAssigned] public GameObject BulletPrefab;
+            public GameObject EnemyPrefab;
 
             public UISetup.Context UIContext;
         }
