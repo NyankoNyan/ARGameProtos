@@ -23,6 +23,6 @@ MonoBehaviour:
     - Name: Top-down shooter
       SceneDefault: TopDownShooter
       SceneAR: TopDownShooter
-    - Name: Top-down shooter (test)
-      SceneDefault: TopDownShooter
-      SceneAR: TopDownShooter
+    - Name: Scene scales test
+      SceneDefault: ScalesMock
+      SceneAR: Scales
