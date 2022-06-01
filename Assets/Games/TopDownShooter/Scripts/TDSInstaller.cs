@@ -21,10 +21,6 @@ namespace Games.TDS
             Container.BindInstance( _settings.ARSettings ).AsSingle();
             if (_settings.ARSettings.AREnable) {
                 Container.Bind<AnchorCreator>().AsSingle();
-                //Container
-                //    .BindInstance( _settings.ARSettings.CameraPivot )
-                //    .AsSingle()
-                //    .WhenInjectedInto<AnchorCreator>();
                 Container.BindInstance( _settings.ARSettings.Origin ).AsSingle();
                 Container.BindInstance( _settings.ARSettings.PlaneManager ).AsSingle();
                 Container.BindInstance( _settings.ARSettings.RaycastManager ).AsSingle();
@@ -110,15 +106,9 @@ namespace Games.TDS
 
         private void InstallScene()
         {
-            //Container.Bind<SceneSetupFactory>().AsSingle();
-
-            //Container.BindFactory<SceneSetupAR, SceneSetupAR.Factory>().AsSingle().WhenInjectedInto<SceneSetupFactory>();
-            //Container.BindFactory<SceneSetupPCTest, SceneSetupPCTest.Factory>().AsSingle().WhenInjectedInto<SceneSetupFactory>();
-
             if (!_settings.ARSettings.AREnable) {
                 Container.BindInterfacesAndSelfTo<CameraController>().AsSingle().NonLazy();
             }
-            //Container.BindFactory<Camera, PCTestCamera, PCTestCamera.Factory>();
         }
 
         private void InstallGameStates()

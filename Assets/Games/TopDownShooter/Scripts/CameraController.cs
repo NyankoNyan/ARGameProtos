@@ -11,10 +11,7 @@ namespace Games.TDS
         private readonly PlayerController.Settings _settings;
         private readonly Camera _camera;
 
-        //ICameraProvider _cameraProvider;
         private bool _init;
-
-        //public ICameraProvider CameraProvider { get => _cameraProvider; set => _cameraProvider = value; }
 
         public CameraController(PlayerController.Settings settings, Camera camera)
         {

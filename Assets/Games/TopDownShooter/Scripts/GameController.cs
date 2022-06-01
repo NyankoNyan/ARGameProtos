@@ -20,40 +20,22 @@ namespace Games.TDS
         public event StateChanged StateChangedEvent;
         #endregion
 
-        //private readonly DiContainer _container;
         readonly GameStateFactory _gameStateFactory;
-        //readonly ARFeatures _arFeatures;
-        //readonly SceneSetupFactory _sceneSetupFactory;
-        //private readonly Anchor.Factory _anchorFactory;
         private readonly Player.Factory _playerFactory;
-        //private readonly LevelSpawners _spawners;
-        //private readonly TargetingContoller _targetingContoller;
         private readonly ARSettings _arSettings;
 
-        //private readonly SceneSetupAR.Settings _arSettings;
         private readonly AnchorCreator _anchorCreator;
         private readonly PlanesSwitcher _planesSwitcher;
         GameState _currentGameState;
-        //private SceneSetup _sceneSetup;
 
         bool _init = false;
-        //private Anchor _anchor;
-        //private Plane _anchorPlane;
         private Player _player;
 
         public GameState CurrentGameState { get => _currentGameState; }
-        //public SceneSetup SceneSetup { get => _sceneSetup; }
 
         public GameController(
-            //DiContainer container,
             GameStateFactory gameStateFactory,
-            //ARFeatures arFeatures,
-            //SceneSetupFactory sceneSetupFactory,
-            //Anchor.Factory anchorFactory,
             Player.Factory playerFactory,
-            //LevelSpawners spawners,
-            //TargetingContoller targetingContoller,
-            //SceneSetupAR.Settings arSettings,
             [InjectOptional]
             AnchorCreator anchorCreator,
             [InjectOptional]
@@ -61,14 +43,8 @@ namespace Games.TDS
             ARSettings arSettings
             )
         {
-            //_container = container;
             _gameStateFactory = gameStateFactory;
-            //_arFeatures = arFeatures;
-            //_sceneSetupFactory = sceneSetupFactory;
-            //_anchorFactory = anchorFactory;
             _playerFactory = playerFactory;
-            //_spawners = spawners;
-            //_targetingContoller = targetingContoller;
             _arSettings = arSettings;
             _anchorCreator = anchorCreator;
             _planesSwitcher = planesSwitcher;
@@ -107,33 +83,6 @@ namespace Games.TDS
                 _arSettings.Origin.transform.localScale = _arSettings.SceneScale * Vector3.one;
                 ChangeState( GameStates.Start );
             }
-            //if (Touch.activeFingers.Count == 0) {
-            //    return;
-            //}
-
-            //Touch touch = Touch.activeFingers[0].currentTouch;
-            //if (touch.phase != TouchPhase.Began) {
-            //    return;
-            //}
-
-            //if (EventSystem.current.IsPointerOverGameObject( touch.touchId )) {
-            //    return;
-            //}
-
-            //CastPoint point = _sceneSetup.CastScreenRay( touch.screenPosition, false );
-
-            //if (point != null) {
-            //    if (_arFeatures.IsARSupported) {
-            //        _anchor = _anchorFactory.Create( point );
-            //        _arRefs.Origin.MakeContentAppearAt( _anchor.transform, _anchor.transform.position, _anchor.transform.rotation );
-            //        _arRefs.Origin.transform.localScale = _arSettings.SessionScale * Vector3.one;
-            //        _anchorPlane = new Plane( point.Rotation * Vector3.up, point.Position );
-            //        _targetingContoller.SetPlane( _anchorPlane );
-            //    }
-
-            //    ChangeState( GameStates.Start );
-            //}
-
         }
 
         private void UpdateStart()
@@ -143,31 +92,18 @@ namespace Games.TDS
             _player.transform.position = _player.transform.parent.position;
             _player.transform.rotation = _player.transform.parent.rotation;
 
-            //if (_arFeatures.IsARSupported) {
-            //    _player.transform.parent = _anchor.transform;
-            //    _player.transform.position = _anchor.transform.position;
-            //    _player.transform.rotation = _anchor.transform.rotation;
-            //} else {
-            //    _player.transform.position = _spawners.transform.position;
-            //    _player.transform.rotation = _spawners.transform.rotation;
-            //}
-
             ChangeState( GameStates.Play );
         }
 
 
         private void InitScene()
         {
-            //if (_arFeatures.IsARSupported) {
             if (_arSettings.AREnable) {
                 _currentGameState = _gameStateFactory.CreateState( GameStates.Placement );
             } else {
                 _currentGameState = _gameStateFactory.CreateState( GameStates.Start );
             }
 
-            //_sceneSetup = _sceneSetupFactory.Create();
-            //_container.BindInstance( _sceneSetup );
-            //_sceneSetup.Start();
             _currentGameState.Start();
 
             EnhancedTouchSupport.Enable();

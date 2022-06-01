@@ -10,10 +10,7 @@ namespace Games.TDS
     {
         Vector3 _moveDirection;
         private CastPoint _castPoint;
-        //private readonly DiContainer _container;
         private readonly Settings _settings;
-        //private readonly LevelSpawners _spawners;
-        //private readonly Player.Factory _playerFactory;
         private readonly TargetingContoller _targetingController;
         private readonly PlayerRegistry _playerRegistry;
         private readonly Camera _camera;
@@ -23,18 +20,12 @@ namespace Games.TDS
         public Vector2 MoveDirection { get => _moveDirection; }
 
         public PlayerController(
-            //DiContainer container,
             Settings settings,
-            //LevelSpawners spawners,
-            //Player.Factory playerFactory,
             TargetingContoller targetingContoller,
             PlayerRegistry playerRegistry,
             Camera camera)
         {
-            //_container = container;
             _settings = settings;
-            //_spawners = spawners;
-            //_playerFactory = playerFactory;
             _targetingController = targetingContoller;
             _playerRegistry = playerRegistry;
             _camera = camera;
