@@ -12,14 +12,17 @@ EditorBuildSettings:
     path: Assets/Games/All/MainMenu.unity
     guid: a69e4410f788e07449593e6f9fa3c44f
   - enabled: 1
-    path: Assets/Games/TopDownShooter/TopDownShooter.unity
-    guid: cd5a31dce970de44294c8619fd8f00f2
-  - enabled: 1
     path: Assets/Games/Scales/Scales.unity
     guid: 034283b45a1ba614f90a4cf449c394b9
   - enabled: 1
     path: Assets/Games/Scales/ScalesMock.unity
     guid: a8c319a7d8f45e0448e6390cd7dc9820
+  - enabled: 1
+    path: Assets/Games/TopDownShooter/TDS AR.unity
+    guid: d7123b79a51ed8c4eb862815b1e30140
+  - enabled: 1
+    path: Assets/Games/TopDownShooter/TDS PC.unity
+    guid: 43a76ef95b3471448bda6b11ef47d1b0
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 744b813df90924c169af73489b8325de,
       type: 2}

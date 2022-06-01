@@ -1,5 +1,6 @@
 using MyBox;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -22,8 +23,8 @@ namespace Games
     public class GameMode
     {
         public string Name;
-        [Scene] public string SceneDefault;
-        [Scene] public string SceneAR;
+        public SceneReference SceneDefault;
+        public SceneReference SceneAR;
     }
 
     [Serializable]

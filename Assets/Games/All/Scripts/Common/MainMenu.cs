@@ -20,7 +20,7 @@ namespace Games
 
             for (int i = 0; i < _gameModeSettings.GameModes.Length; i++) {
                 GameMode gameMode = _gameModeSettings.GameModes[i];
-                var sceneName = _arFeature.IsARSupported ? gameMode.SceneAR : gameMode.SceneDefault;
+                var sceneName = _arFeature.IsARSupported ? gameMode.SceneAR.SceneName : gameMode.SceneDefault.SceneName;
                 Button newButton = _buttonFactory.Create( sceneName, gameMode.Name, ChangeScene );
                 RectTransform rect = newButton.GetComponent<RectTransform>();
                 rect.localPosition = new Vector2( 0, buttonList.TopOffset + buttonList.VerticalOffset * i );

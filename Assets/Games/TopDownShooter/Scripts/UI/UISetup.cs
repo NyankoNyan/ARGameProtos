@@ -8,15 +8,15 @@ using Zenject;
 public class UISetup : ITickable
 {
     private bool _initiaized;
-    private Context _context;
+    private Preset _preset;
     private Settings _settings;
 
-    public UISetup(Context context, Settings settings)
+    public UISetup(Preset preset, Settings settings)
     {
-        _context = context;
+        _preset = preset;
         _settings = settings;
 
-        Assert.IsNotNull( context.FireStick );
+        Assert.IsNotNull( preset.FireStick );
     }
 
     public void Tick()
@@ -32,7 +32,7 @@ public class UISetup : ITickable
                     case RuntimePlatform.OSXPlayer:
                     case RuntimePlatform.LinuxPlayer:
                     case RuntimePlatform.LinuxEditor:
-                        _context.FireStick.SetActive( false );
+                        _preset.FireStick.SetActive( false );
                         break;
                 }
             }
@@ -40,7 +40,7 @@ public class UISetup : ITickable
     }
 
     [Serializable]
-    public class Context
+    public class Preset
     {
         public GameObject FireStick;
     }

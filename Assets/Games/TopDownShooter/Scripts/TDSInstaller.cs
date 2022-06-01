@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Zenject;
 using MyBox;
+using UnityEngine.XR.ARFoundation;
 
 namespace Games.TDS
 {
@@ -10,23 +11,73 @@ namespace Games.TDS
         [SerializeField] Settings _settings;
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<GameController>().AsSingle().NonLazy();
+            InstallGameEngine();
 
             InstallScene();
             InstallGameStates();
-
-            Container.BindInstance( _settings.Spawners ).AsSingle();
-
             InstallPlayer();
+            InstallUI();
 
-            Container.BindInterfacesAndSelfTo<CameraController>().AsSingle();
-            Container.BindFactory<Camera, PCTestCamera, PCTestCamera.Factory>();
+            Container.BindInstance( _settings.ARSettings ).AsSingle();
+            if (_settings.ARSettings.AREnable) {
+                Container.Bind<AnchorCreator>().AsSingle();
+                //Container
+                //    .BindInstance( _settings.ARSettings.CameraPivot )
+                //    .AsSingle()
+                //    .WhenInjectedInto<AnchorCreator>();
+                Container.BindInstance( _settings.ARSettings.Origin ).AsSingle();
+                Container.BindInstance( _settings.ARSettings.PlaneManager ).AsSingle();
+                Container.BindInstance( _settings.ARSettings.RaycastManager ).AsSingle();
+                Container
+                    .BindInstance( _settings.SceneRoot )
+                    .AsSingle()
+                    .WhenInjectedInto<AnchorCreator>();
+
+                Container.Bind<PlanesSwitcher>().AsSingle();
+            }
+
+            Container.BindInstance( _settings.Camera ).AsSingle();
 
             Container
                 .BindFactory<CastPoint, Anchor, Anchor.Factory>()
                 .FromNewComponentOnNewGameObject()
                 .WithGameObjectName( "Anchor" );
 
+            Container
+                .BindFactory<Bullet, Bullet.Factory>()
+                .FromPoolableMemoryPool<Bullet, Bullet.Pool>( poolBinder => poolBinder
+                    .WithInitialSize( 20 )
+                    .FromNewComponentOnNewPrefab( _settings.BulletPrefab )
+                    .WithGameObjectName( "Bullet" )
+                    .UnderTransform( _settings.SceneRoot )
+                );
+
+            Container
+                .BindFactory<Enemy, Enemy.Factory>()
+                .FromPoolableMemoryPool<Enemy, Enemy.Pool>( poolBuilder => poolBuilder
+                     .WithInitialSize( 10 )
+                     .FromSubContainerResolve()
+                     .ByNewPrefabInstaller<EnemyInstaller>( _settings.EnemyPrefab )
+                     .WithGameObjectName( "Enemy" )
+                     .UnderTransform( _settings.SceneRoot )
+                );
+        }
+
+        private void InstallGameEngine()
+        {
+            Container.BindInterfacesAndSelfTo<GameController>().AsSingle().NonLazy();
+
+            Container
+                .Bind<BulletSpawnService>()
+                .AsSingle();
+
+            Container.Bind<HitService>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<EnemySpawner>().AsSingle().NonLazy();
+        }
+
+        private void InstallUI()
+        {
             Container
                 .Bind<TargetingContoller>()
                 .AsSingle();
@@ -36,41 +87,12 @@ namespace Games.TDS
                 .AsSingle()
                 .NonLazy();
 
-            Container
-                .BindFactory<Bullet, Bullet.Factory>()
-                .FromPoolableMemoryPool<Bullet, Bullet.Pool>( poolBinder => poolBinder
-                    .WithInitialSize( 20 )
-                    .FromNewComponentOnNewPrefab( _settings.BulletPrefab )
-                    .WithGameObjectName( "Bullet" )
-                    .UnderTransformGroup( "Bullets" )
-                );
-
-            Container
-                .Bind<BulletSpawnService>()
-                .AsSingle();
-
             Container.BindInstance( _settings.UIContext );
 
             Container
                 .BindInterfacesAndSelfTo<UISetup>()
                 .AsSingle()
                 .NonLazy();
-
-            Container
-                .BindFactory<Enemy, Enemy.Factory>()
-                .FromPoolableMemoryPool<Enemy, Enemy.Pool>( poolBuilder => poolBuilder
-                     .WithInitialSize( 10 )
-                     .FromSubContainerResolve()
-                     .ByNewPrefabInstaller<EnemyInstaller>( _settings.EnemyPrefab )
-                     .WithGameObjectName( "Enemy" )
-                     .UnderTransformGroup( "Enemies" )
-                );
-
-            Container.Bind<HitService>().AsSingle();
-
-            Container.BindInterfacesAndSelfTo<EnemySpawner>().AsSingle().NonLazy();
-
-            Container.Bind<ARRefs>().AsSingle();
         }
 
         private void InstallPlayer()
@@ -78,7 +100,8 @@ namespace Games.TDS
             Container
                 .BindFactory<Player, Player.Factory>()
                 .FromComponentInNewPrefab( _settings.PlayerPrefab )
-                .WithGameObjectName( "Player" );
+                .WithGameObjectName( "Player" )
+                .UnderTransform( _settings.SceneRoot );
 
             Container.BindInterfacesAndSelfTo<PlayerController>().AsSingle();
 
@@ -87,10 +110,15 @@ namespace Games.TDS
 
         private void InstallScene()
         {
-            Container.Bind<SceneSetupFactory>().AsSingle();
+            //Container.Bind<SceneSetupFactory>().AsSingle();
 
-            Container.BindFactory<SceneSetupAR, SceneSetupAR.Factory>().AsSingle().WhenInjectedInto<SceneSetupFactory>();
-            Container.BindFactory<SceneSetupPCTest, SceneSetupPCTest.Factory>().AsSingle().WhenInjectedInto<SceneSetupFactory>();
+            //Container.BindFactory<SceneSetupAR, SceneSetupAR.Factory>().AsSingle().WhenInjectedInto<SceneSetupFactory>();
+            //Container.BindFactory<SceneSetupPCTest, SceneSetupPCTest.Factory>().AsSingle().WhenInjectedInto<SceneSetupFactory>();
+
+            if (!_settings.ARSettings.AREnable) {
+                Container.BindInterfacesAndSelfTo<CameraController>().AsSingle().NonLazy();
+            }
+            //Container.BindFactory<Camera, PCTestCamera, PCTestCamera.Factory>();
         }
 
         private void InstallGameStates()
@@ -107,12 +135,26 @@ namespace Games.TDS
         [Serializable]
         public class Settings
         {
-            [MustBeAssigned] public LevelSpawners Spawners;
+            public Transform SceneRoot;
             [MustBeAssigned] public Player PlayerPrefab;
             [MustBeAssigned] public GameObject BulletPrefab;
             public GameObject EnemyPrefab;
+            public Camera Camera;
 
-            public UISetup.Context UIContext;
+            public UISetup.Preset UIContext;
+
+            public ARSettings ARSettings;
         }
+
+        
+    }
+    [Serializable]
+    public class ARSettings
+    {
+        public bool AREnable;
+        public ARSessionOrigin Origin;
+        public ARRaycastManager RaycastManager;
+        public ARPlaneManager PlaneManager;
+        public float SceneScale;
     }
 }

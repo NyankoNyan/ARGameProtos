@@ -12,16 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e787e4d7a0a6e4b8a22d05d08a067d, type: 3}
   m_Name: TDSSettingsInstaller
   m_EditorClassIdentifier: 
-  SceneARSettings:
-    ARSession: {fileID: 3076411680165999230, guid: 1b8a462eb041bcb4183c677663e06f3f,
-      type: 3}
-    ARSessionOrigin: {fileID: 156707700703306744, guid: 3e8245ca49490ed4bb53a48613b821e3,
-      type: 3}
-  ScenePCSettings:
-    Room: {fileID: 7081475676522228871, guid: fb35e8318d78f4044968f49785def89b, type: 3}
-    FloorTag: Floor
   PlayerSettings:
-    MaxSpeed: 5
+    MaxSpeed: 10
     Acceleration: 10
     MovePositionIgnoreDistance: 0.3
     RotationSmooth: 0.5
@@ -226,7 +218,7 @@ MonoBehaviour:
         m_Action: Fire Input
         m_Flags: 0
       m_Flags: 0
-    FireSensitivity: 0.5
+    FireSensitivity: 0.2
   CursorSettings:
     CursorPrefab: {fileID: 5742589004015360069, guid: 627dabb048057634daa6c1caffad0a82,
       type: 3}

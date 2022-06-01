@@ -21,8 +21,24 @@ MonoBehaviour:
   GameModeSettings:
     GameModes:
     - Name: Top-down shooter
-      SceneDefault: TopDownShooter
-      SceneAR: TopDownShooter
-    - Name: Scene scales test
-      SceneDefault: ScalesMock
-      SceneAR: Scales
+      SceneDefault:
+        Scene: {fileID: 102900000, guid: 43a76ef95b3471448bda6b11ef47d1b0, type: 3}
+        SceneName: TDS PC
+        sceneIndex: 5
+        sceneEnabled: 1
+      SceneAR:
+        Scene: {fileID: 102900000, guid: d7123b79a51ed8c4eb862815b1e30140, type: 3}
+        SceneName: TDS AR
+        sceneIndex: 4
+        sceneEnabled: 1
+    - Name: Scales test
+      SceneDefault:
+        Scene: {fileID: 102900000, guid: a8c319a7d8f45e0448e6390cd7dc9820, type: 3}
+        SceneName: ScalesMock
+        sceneIndex: 3
+        sceneEnabled: 1
+      SceneAR:
+        Scene: {fileID: 102900000, guid: 034283b45a1ba614f90a4cf449c394b9, type: 3}
+        SceneName: Scales
+        sceneIndex: 2
+        sceneEnabled: 1

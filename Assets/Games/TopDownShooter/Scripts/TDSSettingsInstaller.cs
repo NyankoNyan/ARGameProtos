@@ -6,8 +6,8 @@ namespace Games.TDS
     [CreateAssetMenu( fileName = "TDSSettingsInstaller", menuName = "Installers/TDSSettingsInstaller" )]
     public class TDSSettingsInstaller : ScriptableObjectInstaller<TDSSettingsInstaller>
     {
-        public SceneSetupAR.Settings SceneARSettings;
-        public SceneSetupPCTest.Settings ScenePCSettings;
+        //public SceneSetupAR.Settings SceneARSettings;
+        //public SceneSetupPCTest.Settings ScenePCSettings;
         public Player.Settings PlayerSettings;
         public PlayerController.Settings PlayerControllerSettings;
         public TargetingCursor.Settings CursorSettings;
@@ -19,8 +19,8 @@ namespace Games.TDS
 
         public override void InstallBindings()
         {
-            Container.BindInstance( SceneARSettings );
-            Container.BindInstance( ScenePCSettings );
+            //Container.BindInstance( SceneARSettings );
+            //Container.BindInstance( ScenePCSettings );
             Container.BindInstance( PlayerSettings );
             Container.BindInstance( PlayerControllerSettings );
             Container.BindInstance( CursorSettings );

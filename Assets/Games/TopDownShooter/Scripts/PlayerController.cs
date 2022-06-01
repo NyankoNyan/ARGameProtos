@@ -10,31 +10,34 @@ namespace Games.TDS
     {
         Vector3 _moveDirection;
         private CastPoint _castPoint;
-        private readonly DiContainer _container;
+        //private readonly DiContainer _container;
         private readonly Settings _settings;
-        private readonly LevelSpawners _spawners;
-        private readonly Player.Factory _playerFactory;
+        //private readonly LevelSpawners _spawners;
+        //private readonly Player.Factory _playerFactory;
         private readonly TargetingContoller _targetingController;
         private readonly PlayerRegistry _playerRegistry;
+        private readonly Camera _camera;
 
         public MoveTypes MoveType => _settings.MoveType;
         public CastPoint CastPoint { get => _castPoint; }
         public Vector2 MoveDirection { get => _moveDirection; }
 
         public PlayerController(
-            DiContainer container,
+            //DiContainer container,
             Settings settings,
-            LevelSpawners spawners,
-            Player.Factory playerFactory,
+            //LevelSpawners spawners,
+            //Player.Factory playerFactory,
             TargetingContoller targetingContoller,
-            PlayerRegistry playerRegistry)
+            PlayerRegistry playerRegistry,
+            Camera camera)
         {
-            _container = container;
+            //_container = container;
             _settings = settings;
-            _spawners = spawners;
-            _playerFactory = playerFactory;
+            //_spawners = spawners;
+            //_playerFactory = playerFactory;
             _targetingController = targetingContoller;
             _playerRegistry = playerRegistry;
+            _camera = camera;
 
             _settings.CharacterMoveInput.Enable();
             _settings.FireInput.Enable();
@@ -48,16 +51,13 @@ namespace Games.TDS
 
             MovePlayer();
 
-            SceneSetup sceneSetup = _container.TryResolve<SceneSetup>();
-            if (sceneSetup != null) {
-                Vector2 fireDirection = _settings.FireInput.ReadValue<Vector2>();
-                if (fireDirection != Vector2.zero) {
-                    Vector3 fireNormalized = Normalize2DInputFromView( sceneSetup.Camera, fireDirection );
-                    if (fireDirection.magnitude >= _settings.FireSensitivity) {
-                        _playerRegistry.Player.FireTo( fireNormalized );
-                    } else {
-                        _playerRegistry.Player.WatchTo( fireNormalized );
-                    }
+            Vector2 fireDirection = _settings.FireInput.ReadValue<Vector2>();
+            if (fireDirection != Vector2.zero) {
+                Vector3 fireNormalized = Normalize2DInputFromView( _camera, fireDirection );
+                if (fireDirection.magnitude >= _settings.FireSensitivity) {
+                    _playerRegistry.Player.FireTo( fireNormalized );
+                } else {
+                    _playerRegistry.Player.WatchTo( fireNormalized );
                 }
             }
 
@@ -70,27 +70,23 @@ namespace Games.TDS
             _moveDirection = Vector3.zero;
             _castPoint = null;
 
-            SceneSetup sceneSetup = _container.TryResolve<SceneSetup>();
+            if (_settings.MoveType == MoveTypes.Direction) {
 
-            if (sceneSetup != null) {
-                if (_settings.MoveType == MoveTypes.Direction) {
+                Vector2 inputDirection = _settings.CharacterMoveInput.ReadValue<Vector2>();
+                _moveDirection = Normalize2DInputFromView( _camera, inputDirection );
 
-                    Vector2 inputDirection = _settings.CharacterMoveInput.ReadValue<Vector2>();
-                    _moveDirection = Normalize2DInputFromView( sceneSetup.Camera, inputDirection );
-
-                    if (_moveDirection != Vector3.zero) {
-                        _playerRegistry.Player.MoveDirection( _moveDirection );
-                    }
-
-                } else if (_settings.MoveType == MoveTypes.Target) {
-
-                    _castPoint = _targetingController.CastScreenRay( new Vector2( .5f, .5f ), true );
-
-                    if (_castPoint != null) {
-                        _playerRegistry.Player.MovePosition( _castPoint.Position );
-                    }
-
+                if (_moveDirection != Vector3.zero) {
+                    _playerRegistry.Player.MoveDirection( _moveDirection );
                 }
+
+            } else if (_settings.MoveType == MoveTypes.Target) {
+
+                _castPoint = _targetingController.CastScreenRay( new Vector2( .5f, .5f ), true );
+
+                if (_castPoint != null) {
+                    _playerRegistry.Player.MovePosition( _castPoint.Position );
+                }
+
             }
         }
 

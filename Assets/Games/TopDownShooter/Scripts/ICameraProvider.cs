@@ -2,8 +2,8 @@
 
 namespace Games.TDS
 {
-    public interface ICameraProvider
-    {
-        public Camera Camera { get; }
-    }
+    //public interface ICameraProvider
+    //{
+    //    public Camera Camera { get; }
+    //}
 }

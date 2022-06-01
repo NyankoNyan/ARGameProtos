@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Games.TDS
 {
-    public class Bullet : MonoBehaviour, IPoolable<IMemoryPool>,IHitable
+    public class Bullet : MonoBehaviour, IPoolable<IMemoryPool>, IHitable
     {
         private IMemoryPool _pool;
         private Settings _settings;
@@ -50,8 +50,11 @@ namespace Games.TDS
 
         private void OnCollisionEnter(Collision collision)
         {
+            if (!this) {
+                return;
+            }
             var hitable = collision.transform.GetComponent<IHitable>();
-            if (hitable!=null) {
+            if (hitable != null) {
                 _hitService.MakeHit( this, hitable, _settings.Damage, HitTypes.Range );
                 _pool.Despawn( this );
             }
@@ -70,12 +73,12 @@ namespace Games.TDS
 
         public void GetDamage(float damage)
         {
-            
+
         }
 
         public void GetImpact(Vector3 impactForce)
         {
-            
+
         }
 
         [Serializable]
